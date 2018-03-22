@@ -1,0 +1,26 @@
+(define (square n)
+  (* n n))
+(define (next n)
+  (if (= n 2)
+      3
+      (+ n 2)))
+(define (expmod base exp m)
+  (define (nontrivial n)
+    (if (and (not (= n 1)) (not (= n exp)) (= (square n) 1))
+        0
+        (remainder (square n) m)))
+  (cond ((= exp 0) 1)        
+        ((even? exp)
+         (nontrivial (expmod base (/ exp 2) m)))
+        (else
+         (remainder (* base (expmod base (- exp 1) m))
+                    m))))
+(define (miller-rabin-test n)
+  (define (try-it a)
+    (= (expmod a (- n 1) n) 1))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (prime? n times)
+  (cond ((= times 0) true)
+        ((miller-rabin-test n) (prime? n (- times 1)))
+        (else false)))
