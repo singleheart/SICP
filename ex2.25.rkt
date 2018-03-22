@@ -1,0 +1,6 @@
+(define list1 (list 1 3 (cons 5 7) 9))
+(define list2 (list (list 7)))
+(define list3 (cons 1 (cons 2 (cons 3 (cons 4 (cons 5 (cons 6 7)))))))
+(cdaddr list1)
+(caar list2)
+(cddr (cddddr list3))
